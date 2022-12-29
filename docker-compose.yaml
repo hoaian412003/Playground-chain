@@ -1,5 +1,12 @@
 version: "3.9"
 services:
+  geth-init:
+    image: "ethereum/client-go:latest"
+    command: --datadir=/data init /genesis.json
+    volumes:
+      - ./genesis.json:/genesis.json
+      - ./data:/data
+
   geth:
     image: "ethereum/client-go:latest"
     command:
@@ -12,6 +19,9 @@ services:
       - --unlock=0x75333f8c0dd26112676597b66a42fb5b5da2b440
       - --password=password.txt
       - --mine
+    depends_on:
+      geth-init:
+        condition: service_completed_successfully
     ports:
       - 8545:8545
     volumes:
