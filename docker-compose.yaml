@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  geth:
+    image: "ethereum/client-go:latest"
+    command:
+      - --http
+      - --http.api=eth,net,web3,personal,miner,txpool
+      - --http.addr=0.0.0.0
+      - --datadir=data
+      - --allow-insecure-unlock
+      - --nodiscover
+      - --unlock=0x75333f8c0dd26112676597b66a42fb5b5da2b440
+      - --password=password.txt
+      - --mine
+    ports:
+      - 8545:8545
+    volumes:
+      - ./data:/data
+      - ./password.txt:/password.txt
