@@ -31,7 +31,7 @@ services:
 
   view_enr:
     image: "ethereum/client-go:latest"
-    command: attach data/geth.ipc --exec admin.nodeInfo.enr
+    command: attach --exec admin.nodeInfo.enr data/geth.ipc
     depends_on:
       - geth
     volumes:
