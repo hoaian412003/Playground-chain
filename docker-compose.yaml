@@ -19,7 +19,7 @@ services:
       - --unlock=0x75333f8c0dd26112676597b66a42fb5b5da2b440
       - --password=password.txt
       - --mine
-      - --nat="extip:13.213.36.146"
+      - --nat=extip:13.213.36.146
     depends_on:
       geth-init:
         condition: service_completed_successfully
