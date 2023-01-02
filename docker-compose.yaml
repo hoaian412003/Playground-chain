@@ -29,10 +29,10 @@ services:
       - ./data:/data
       - ./password.txt:/password.txt
 
-#  view_enr:
-#    image: "ethereum/client-go:latest"
-#    command: attach data/geth.ipc --exec admin.nodeInfo.enr
-#    depends_on:
-#      - geth
-#    volumes:
-#      - ./data:/data
+  view_enr:
+    image: "ethereum/client-go:latest"
+    command: attach data/geth.ipc --exec admin.nodeInfo.enr
+    depends_on:
+      - geth
+    volumes:
+      - ./data:/data
