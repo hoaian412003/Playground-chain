@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/hoaian-blockchain.iml" filepath="$PROJECT_DIR$/.idea/hoaian-blockchain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/hoaian-testnet.iml" filepath="$PROJECT_DIR$/.idea/hoaian-testnet.iml" />
     </modules>
   </component>
 </project>
