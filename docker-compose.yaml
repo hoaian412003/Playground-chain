@@ -31,7 +31,7 @@ services:
       - --mine
       - --http
       - --http.addr=0.0.0.0
-      - --http.api=eth,net,web3,personal,miner,txpool,admin
+      - --http.api=eth,net,web3,personal,miner,txpool,admin,clique
       - --http.port=6868
       - --authrpc.port=8553
     volumes:
@@ -72,7 +72,7 @@ services:
       - --mine
       - --http
       - --http.addr=0.0.0.0
-      - --http.api=eth,net,web3,personal,miner,txpool,admin
+      - --http.api=eth,net,web3,personal,miner,txpool,admin,clique
       - --http.port=8888
       - --authrpc.port=8552
     volumes:
@@ -113,7 +113,7 @@ services:
       - --mine
       - --http
       - --http.addr=0.0.0.0
-      - --http.api=eth,net,web3,personal,miner,txpool,admin
+      - --http.api=eth,net,web3,personal,miner,txpool,admin,clique
       - --http.port=9999
       - --authrpc.port=8551
     volumes:
