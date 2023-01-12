@@ -1,0 +1,12 @@
+[Unit]
+Description=Bootnode
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/bootnode -nodekey "./bootnode/boot.key" -verbosity 5 -addr "127.0.0.1:30301"
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
