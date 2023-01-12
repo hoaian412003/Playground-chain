@@ -1,5 +1,5 @@
 sudo add-apt-repository -y ppa:ethereum/ethereum
-sudo apt-get update
-sudo apt-get install ethereum
-sudo apt-get upgrade geth
-sudo apt install golang-go
+sudo apt-get -y update
+sudo apt-get -y install ethereum
+sudo apt-get -y upgrade geth
+sudo apt install -y golang-go
