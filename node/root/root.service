@@ -4,7 +4,7 @@ Description=Root
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/bin/geth init --datadir /run/chain/node/root /run/chain/node/genesis.json
+ExecStart=source /run/chain/node/root/start-server.sh
 Restart=on-failure
 RestartSec=5s
 
