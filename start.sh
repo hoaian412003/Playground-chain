@@ -1,0 +1,1 @@
+systemctl start --no-pager node/bootnode/bootnode.service
