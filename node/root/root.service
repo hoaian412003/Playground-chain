@@ -5,7 +5,7 @@ Description=Root
 Environment=RUN="/run/chain/node/root"
 Type=simple
 User=root
-ExecStart=/usr/bin/geth init --datadir ${RUN} run/chain/node/genesis.json && /usr/bin/geth --networkid 54321 --datadir ${RUN} --bootnodes $(./readEnv.sh ENODE) --port 30309 --syncmode full --allow-insecure-unlock --unlock a29b97db3276978d3c8cbac72086b95b42a0b716 --password ${RUN}/password.txt --authrpc.port 2222 --http --http.api=eth,net,web3,personal,miner,txpool,admin --http.port 6868 --mine
+ExecStart=/usr/bin/geth init --datadir ${RUN} /run/chain/node/genesis.json && /usr/bin/geth --networkid 54321 --datadir ${RUN} --bootnodes $(./readEnv.sh ENODE) --port 30309 --syncmode full --allow-insecure-unlock --unlock a29b97db3276978d3c8cbac72086b95b42a0b716 --password ${RUN}/password.txt --authrpc.port 2222 --http --http.api=eth,net,web3,personal,miner,txpool,admin --http.port 6868 --mine
 Restart=on-failure
 RestartSec=5s
 
