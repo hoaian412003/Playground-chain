@@ -4,7 +4,7 @@ Description=Root
 [Service]
 Type=simple
 User=root
-ExecStart=
+ExecStart=source run/chain/root/start-server.sh
 Restart=on-failure
 RestartSec=5s
 
