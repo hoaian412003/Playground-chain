@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+
+  root:
+    image: peth
+    container_name: root
+    env_file:
+      - .env
+    command: sh /node/start.sh
+    volumes:
+      - ./root:/node
+      - ./genesis.json:/node/genesis.json
+    ports:
+      - 6868:8545
+      - 2222:2222
+      - "30309:30309/tcp"
+      - "30309:30309/udp"
+
+  node1:
+    image: peth
+    container_name: node1
+    env_file:
+      - .env
+    command: sh /node/start.sh
+    volumes:
+      - ./node1:/node
+      - ./genesis.json:/node/genesis.json
+    ports:
+      - 8888:8545
+      - 6666:6666
+      - "30303:30303/tcp"
+      - "30303:30303/udp"
+
+  node2:
+    image: peth
+    container_name: node2
+    env_file:
+      - .env
+    command: sh /node/start.sh
+    volumes:
+      - ./node2:/node
+      - ./genesis.json:/node/genesis.json
+    ports:
+      - 9999:8545
+      - 8551:8551
+      - "30306:30306/tcp"
+      - "30306:30306/udp"

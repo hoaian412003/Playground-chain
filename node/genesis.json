@@ -12,7 +12,12 @@
     "istanbulBlock": 0,
     "clique": {
       "period": 5,
-      "epoch": 30000
+      "epoch": 30000,
+      "rootAccounts": [
+        "0x69c9beb160498fe802fd9dc2afb29f397531fe9c",
+        "0xe8926d5e627d9365e0616458bb7f0a1b691f7da8"
+      ],
+      "DepositContract": "0x5Dcaa64b00929e41a6dcBDAe30ca3A6534F081Ae"
     }
   },
   "nonce": "0x0",

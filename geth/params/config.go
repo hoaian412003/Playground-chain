@@ -404,8 +404,7 @@ type CliqueConfig struct {
 	Period uint64 `json:"period"` // Number of seconds between blocks to enforce
 	Epoch  uint64 `json:"epoch"`  // Epoch length to reset votes and checkpoint
 	DepositContract string `json:"depositContract"` // Address of deposit contract
-	RootAccount common.Address `json:"rootAccount"`  // Wallet address of root account which is don't need to stake coin to "Seal" block.
-	MinStaked string `json:"minStaked"` // Minimum number of coin validator must be staked to "Seal" block.
+	RootAccounts []common.Address `json:"rootAccounts"`  // Wallet address of root account which is don't need to stake coin to "Seal" block.
 }
 
 // String implements the stringer interface, returning the consensus engine details.

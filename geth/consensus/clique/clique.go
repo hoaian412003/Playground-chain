@@ -26,7 +26,6 @@ import (
 	"math"
 	"math/big"
 	"math/rand"
-	"strconv"
 	"sync"
 	"time"
 
@@ -608,82 +607,81 @@ func ConvertUint256ToEth(value *big.Int) *big.Float {
 }
 
 func checkStakedSigner(signer common.Address, c *Clique) bool {
-	if signer == c.config.RootAccount {
-		return true
-	}
+// 	for _, a := range c.config.RootAccounts {
+// 	    if a == signer {
+// 	        return true
+// 	    }
+// 	}
 	client, err := ethclient.Dial("http://localhost:8545")
 	if err != nil {
 		return false
 	}
 	functionAbi := `[{
-                        "type": "constructor",
-                        "inputs": [{"type": "uint256", "name": "_minStaked", "internalType": "uint256"}]
+                        "inputs": [{
+                            "internalType": "uint256", "name": "_minStaked", "type": "uint256"
+                        }], "stateMutability": "nonpayable", "type": "constructor"
                     }, {
-                        "type": "function",
-                        "stateMutability": "view",
-                        "outputs": [{"type": "uint256", "name": "", "internalType": "uint256"}],
-                        "name": "getStakedCoin",
-                        "inputs": [{"type": "address", "name": "walletAddress", "internalType": "address"}]
+                        "inputs": [{
+                            "internalType": "address", "name": "walletAddress", "type": "address"
+                        }], "name": "checkSealerStaked", "outputs": [{
+                            "internalType": "int256", "name": "", "type": "int256"
+                        }], "stateMutability": "view", "type": "function"
                     }, {
-                        "type": "function",
-                        "stateMutability": "view",
-                        "outputs": [{"type": "uint256", "name": "", "internalType": "uint256"}],
-                        "name": "minStaked",
-                        "inputs": []
+                        "inputs": [{
+                            "internalType": "address", "name": "walletAddress", "type": "address"
+                        }], "name": "getStakedCoin", "outputs": [{
+                            "internalType": "uint256", "name": "", "type": "uint256"
+                        }], "stateMutability": "view", "type": "function"
                     }, {
-                        "type": "function",
-                        "stateMutability": "payable",
-                        "outputs": [],
-                        "name": "stake",
-                        "inputs": [],
-                        "payable": true
+                        "inputs": [], "name": "minStaked", "outputs": [{
+                            "internalType": "uint256", "name": "", "type": "uint256"
+                        }], "stateMutability": "view", "type": "function"
                     }, {
-                        "type": "function",
-                        "stateMutability": "view",
-                        "outputs": [{"type": "uint256", "name": "", "internalType": "uint256"}],
-                        "name": "stakes",
-                        "inputs": [{"type": "address", "name": "", "internalType": "address"}]
+                        "inputs": [], "name": "stake", "outputs": [], "stateMutability": "payable", "type": "function"
                     }, {
-                        "type": "function",
-                        "stateMutability": "view",
-                        "outputs": [{"type": "int256", "name": "", "internalType": "int256"}],
-                        "name": "totalValidator",
-                        "inputs": []
+                        "inputs": [{
+                            "internalType": "address", "name": "", "type": "address"
+                        }], "name": "stakes", "outputs": [{
+                            "internalType": "uint256", "name": "", "type": "uint256"
+                        }], "stateMutability": "view", "type": "function"
                     }, {
-                        "type": "function",
-                        "stateMutability": "nonpayable",
-                        "outputs": [],
-                        "name": "unStake",
-                        "inputs": [{"type": "uint256", "name": "amount", "internalType": "uint256"}]
-                    }]`
+                        "inputs": [], "name": "totalValidator", "outputs": [{
+                            "internalType": "int256", "name": "", "type": "int256"
+                        }], "stateMutability": "view", "type": "function"
+                    }, {
+                        "inputs": [{
+                            "internalType": "uint256", "name": "amount", "type": "uint256"
+                        }], "name": "unStake", "outputs": [], "stateMutability": "nonpayable", "type": "function"
+                    }]]`
 	parsedABI, err := abi.JSON(strings.NewReader(functionAbi))
 	input := signer
-	data, err := parsedABI.Pack("getStakedCoin", input) //input)
+	data, err := parsedABI.Pack("checkSealerStaked", input)
 	if err != nil {
+	    fmt.Println("Error when packed data is", err)
 	}
 	contractAddress := common.HexToAddress(c.config.DepositContract)
 
 	output, err := client.CallContract(context.Background(), ethereum.CallMsg{To: &contractAddress, Data: data}, nil)
 	if err != nil {
+	    fmt.Println("Error when call contract is", err)
 	}
 
-	result, err := parsedABI.Unpack("getStakedCoin", output)
+	result, err := parsedABI.Unpack("checkSealerStaked", output)
 	if err != nil {
+	}
+	fmt.Println("Result after call contract is ", result)
+	for _, a := range c.config.RootAccounts {
+	    if a == signer {
+	        return true
+	    }
 	}
 	if len(result) == 0 {
-		return false
+	    return false;
 	}
-	minStaked, err := strconv.ParseFloat(c.config.MinStaked, 64)
-	if err != nil {
-		// handle error
-	}
-
-	resultInt := result[0].(*big.Int)
-	resultFloat := new(big.Float).SetInt(resultInt)
-	if resultFloat.Cmp(big.NewFloat(minStaked)) < 0 {
-		return false
-	}
-	return true
+    if result[0].(*big.Int).Int64() == 1 {
+        return true
+    }
+	return false
 }
 
 func (c *Clique) Seal(chain consensus.ChainHeaderReader, block *types.Block, results chan<- *types.Block, stop <-chan struct{}) error {
