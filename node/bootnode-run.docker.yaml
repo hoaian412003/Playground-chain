@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+
+  bootnode:
+    image: hawyasunaga/ethereum-bootnode
+    command: bootnode -nodekey "./boot.key" -verbosity 5 -addr "localhost:30301"
+    network_mode: "host"
+    volumes:
+      - ./bootnode/boot.key:/boot.key

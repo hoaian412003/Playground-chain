@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  bootnode_genkey:
+    container_name: bootnode_genkey
+    image: hawyasunaga/ethereum-bootnode
+    command: sh -c "bootnode --genkey=/tmp/nodekey && cat /tmp/nodekey"
+    volumes:
+      - ./bootnode/boot.key:/tmp/nodekey
